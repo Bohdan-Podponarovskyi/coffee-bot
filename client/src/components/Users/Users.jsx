@@ -35,7 +35,7 @@ export default function Users() {
     return (
         <Card className="p-5 w-full items-start shadow-lg">
             <Link to={"/create"}>
-                <Button variant="gradient" color="primary" size="sm" className="mb-4">Add new</Button>
+                <Button variant="gradient" size="sm" className="mb-4">Add new</Button>
             </Link>
             <table className="w-full min-w-max table-auto text-center">
                 <thead>

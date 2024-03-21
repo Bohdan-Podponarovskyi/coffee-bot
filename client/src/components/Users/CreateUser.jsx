@@ -1,7 +1,6 @@
 import {
     Card,
     Input,
-    Checkbox,
     Button,
     Typography,
 } from "@material-tailwind/react";
@@ -9,6 +8,10 @@ import {useEffect, useState} from "react";
 
 export default function CreateUser() {
     const [minDate, setMinDate] = useState(null);
+
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [coffeeDate, setCoffeeDate] = useState("");
 
     useEffect(() => {
         const todaysDate = new Date();
@@ -18,51 +21,39 @@ export default function CreateUser() {
 
         setMinDate(`${year}-${month}-${date}`);
     }, []);
+
     return (
         <Card
             color="transparent"
             shadow={true}
             className="w-max mx-auto p-4"
         >
-            <Typography variant="h4" color="blue-gray">
+            <Typography variant="h4" color="blue-gray" className={"text-center"}>
                 Add new user
             </Typography>
             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
                 <div className="mb-1 flex flex-col gap-6">
-                    <Typography variant="h6" color="blue-gray" className="-mb-3">
-                        User Name
-                    </Typography>
                     <Input
                         size="lg"
+                        required
                         placeholder="Jakiv"
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                        labelProps={{
-                            className: "before:content-none after:content-none",
-                        }}
+                        label="User Name"
+                        onChange={(e) => setName(e.target.value)}
                     />
-                    <Typography variant="h6" color="blue-gray" className="-mb-3">
-                        User Phone
-                    </Typography>
                     <Input
+                        required
                         size="lg"
                         placeholder="+380937654321"
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                        labelProps={{
-                            className: "before:content-none after:content-none",
-                        }}
+                        label="User Phone Number"
+                        onChange={(e) => setPhone(e.target.value)}
                     />
-                    <Typography variant="h6" color="blue-gray" className="-mb-3">
-                        Date
-                    </Typography>
                     <Input
+                        required
+                        size="lg"
                         type="date"
                         min={minDate}
-                        size="lg"
-                        placeholder="********"
-                        className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                        labelProps={{
-                            className: "before:content-none after:content-none",
-                        }}
+                        label="Free coffee date"
+                        onChange={(e) => setCoffeeDate(e.target.value)}
                     />
                 </div>
                 <Button
