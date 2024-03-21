@@ -5,45 +5,58 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
+import {useEffect, useState} from "react";
 
 export default function CreateUser() {
+    const [minDate, setMinDate] = useState(null);
+
+    useEffect(() => {
+        const todaysDate = new Date();
+        const year = todaysDate.getFullYear();
+        const month = String(todaysDate.getMonth() + 1).padStart(2, "0");
+        const date = String(todaysDate.getDate()).padStart(2, "0");
+
+        setMinDate(`${year}-${month}-${date}`);
+    }, []);
     return (
-        <Card color="transparent" shadow={false}>
+        <Card
+            color="transparent"
+            shadow={true}
+            className="w-max mx-auto p-4"
+        >
             <Typography variant="h4" color="blue-gray">
-                Sign Up
-            </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-                Nice to meet you! Enter your details to register.
+                Add new user
             </Typography>
             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
                 <div className="mb-1 flex flex-col gap-6">
                     <Typography variant="h6" color="blue-gray" className="-mb-3">
-                        Your Name
+                        User Name
                     </Typography>
                     <Input
                         size="lg"
-                        placeholder="name@mail.com"
+                        placeholder="Jakiv"
                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                         labelProps={{
                             className: "before:content-none after:content-none",
                         }}
                     />
                     <Typography variant="h6" color="blue-gray" className="-mb-3">
-                        Your Email
+                        User Phone
                     </Typography>
                     <Input
                         size="lg"
-                        placeholder="name@mail.com"
+                        placeholder="+380937654321"
                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                         labelProps={{
                             className: "before:content-none after:content-none",
                         }}
                     />
                     <Typography variant="h6" color="blue-gray" className="-mb-3">
-                        Password
+                        Date
                     </Typography>
                     <Input
-                        type="password"
+                        type="date"
+                        min={minDate}
                         size="lg"
                         placeholder="********"
                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -52,33 +65,13 @@ export default function CreateUser() {
                         }}
                     />
                 </div>
-                <Checkbox
-                    label={
-                        <Typography
-                            variant="small"
-                            color="gray"
-                            className="flex items-center font-normal"
-                        >
-                            I agree the
-                            <a
-                                href="#"
-                                className="font-medium transition-colors hover:text-gray-900"
-                            >
-                                &nbsp;Terms and Conditions
-                            </a>
-                        </Typography>
-                    }
-                    containerProps={{ className: "-ml-2.5" }}
-                />
-                <Button className="mt-6" fullWidth>
-                    sign up
+                <Button
+                    className="mt-12 capitalize"
+                    fullWidth
+                    variant="gradient"
+                >
+                    Add
                 </Button>
-                <Typography color="gray" className="mt-4 text-center font-normal">
-                    Already have an account?{" "}
-                    <a href="#" className="font-medium text-gray-900">
-                        Sign In
-                    </a>
-                </Typography>
             </form>
         </Card>
     );

@@ -1,7 +1,7 @@
 import {Card, Typography, Button} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
 
-const TABLE_HEAD = ["Name", "Phone", "Data", "Actions"];
+const TABLE_HEAD = ["Name", "Phone", "Date", "Actions"];
 
 const TABLE_ROWS = [
     {
@@ -33,7 +33,7 @@ const TABLE_ROWS = [
 
 export default function Users() {
     return (
-        <Card className="p-5 items-start shadow-lg">
+        <Card className="p-5 w-full items-start shadow-lg">
             <Link to={"/create"}>
                 <Button variant="gradient" color="primary" size="sm" className="mb-4">Add new</Button>
             </Link>
@@ -43,7 +43,7 @@ export default function Users() {
                     {TABLE_HEAD.map((head) => (
                         <th
                             key={head}
-                            className="bg-blue-gray-50 b p-4 w-1/4 mx-1"
+                            className="bg-gray-100 p-4 w-1/4 mx-1"
                         >
                             <Typography
                                 variant="small"
