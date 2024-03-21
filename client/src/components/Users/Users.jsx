@@ -1,5 +1,7 @@
 import {Card, Typography, Button} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const TABLE_HEAD = ["Name", "Phone", "Date", "Actions"];
 
@@ -32,6 +34,16 @@ const TABLE_ROWS = [
 ];
 
 export default function Users() {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/")
+            .then(res => setUsers(res.data))
+            .catch(err => console.log(err));
+    }, [])
+
+    console.log(users);
+
     return (
         <Card className="p-5 w-full items-start shadow-lg">
             <Link to={"/create"}>
@@ -57,19 +69,18 @@ export default function Users() {
                 </tr>
                 </thead>
                 <tbody>
-                {TABLE_ROWS.map(({name, job, date}, index) => {
-                    const isLast = index === TABLE_ROWS.length - 1;
-                    const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+                {users.map((user) => {
+                    const classes = "p-4 border-b border-blue-gray-50";
 
                     return (
-                        <tr key={name}>
+                        <tr key={user._id}>
                             <td className={classes}>
                                 <Typography
                                     variant="small"
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    {name}
+                                    {user.name}
                                 </Typography>
                             </td>
                             <td className={classes}>
@@ -78,7 +89,7 @@ export default function Users() {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    {job}
+                                    {user.phone}
                                 </Typography>
                             </td>
                             <td className={classes}>
@@ -87,7 +98,7 @@ export default function Users() {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    {date}
+                                    {user.coffeeDate}
                                 </Typography>
                             </td>
                             <td className={classes}>

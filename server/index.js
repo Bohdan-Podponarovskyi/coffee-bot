@@ -16,10 +16,16 @@ mongoose.connect(process.env.MONGODB_URI)
         console.error('Error connecting to the database:', error.message);
     });
 
+app.get('/', (req, res) => {
+    UserModel.find({})
+        .then(users => res.json(users))
+        .catch(err => res.status(400).json({error: err.message}));
+})
+
 app.post('/createUser', (req, res) => {
     UserModel.create(req.body)
         .then(user => res.json(user))
-        .then(err => res.json(err))
+        .catch(err => res.status(400).json({error: err.message}));
 })
 
 app.listen(8080, () => {
