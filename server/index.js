@@ -24,8 +24,25 @@ app.get('/', (req, res) => {
 
 app.get('/getUser/:id', (req, res) => {
     const id = req.params.id;
-    console.log(id);
     UserModel.findById({_id: id})
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json({error: err.message}));
+})
+
+app.put('/updateUser/:id', (req, res) => {
+    const id = req.params.id;
+    UserModel.findByIdAndUpdate({_id: id}, {
+        name: req.body.name,
+        phone: req.body.phone,
+        coffeeDate: req.body.coffeeDate
+    })
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json({error: err.message}));
+})
+
+app.delete('/deleteUser/:id', (req, res) => {
+    const id = req.params.id;
+    UserModel.findByIdAndDelete({_id: id})
         .then(user => res.json(user))
         .catch(err => res.status(400).json({error: err.message}));
 })

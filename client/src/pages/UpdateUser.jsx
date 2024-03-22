@@ -27,22 +27,27 @@ export default function UpdateUser() {
     }, []);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/getUser/'+id)
-            .then(res => console.log(res))
+        axios.get(`http://localhost:8080/getUser/${id}`)
+            .then(res => {
+                setName(res.data.name)
+                setPhone(res.data.phone)
+
+                let coffeeDate = new Date(res.data.coffeeDate);
+                setCoffeeDate(`${coffeeDate.getFullYear()}-${String(coffeeDate.getMonth() + 1).padStart(2, "0")}-${String(coffeeDate.getDate()).padStart(2, "0")}`);
+            })
             .catch(err => console.log(err));
     }, [])
 
     // console.log(users);
 
-    function handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        // let userId = Math.floor(Math.random() * 1000000) + 1;
-        // axios.post("http://localhost:8080/createUser",  {userId, name, phone, coffeeDate})
-        //     .then(result => {
-        //         console.log(result)
-        //         navigate("/")
-        //     })
-        //     .catch(err => console.log(err));
+        axios.put(`http://localhost:8080/updateUser/${id}`,  {id, name, phone, coffeeDate})
+            .then(result => {
+                console.log(result)
+                navigate("/")
+            })
+            .catch(err => console.log(err));
     }
 
     return (
@@ -52,7 +57,7 @@ export default function UpdateUser() {
             className="w-max mx-auto p-4"
         >
             <Typography variant="h4" color="blue-gray" className={"text-center"}>
-                Add new user
+                Update user
             </Typography>
             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
                 <div className="mb-1 flex flex-col gap-6">
@@ -61,6 +66,7 @@ export default function UpdateUser() {
                         required
                         placeholder="Jakiv"
                         label="User Name"
+                        value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
                     <Input
@@ -68,6 +74,7 @@ export default function UpdateUser() {
                         size="lg"
                         placeholder="+380937654321"
                         label="User Phone Number"
+                        value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                     />
                     <Input
@@ -76,6 +83,7 @@ export default function UpdateUser() {
                         type="date"
                         min={minDate}
                         label="Free coffee date"
+                        value={coffeeDate}
                         onChange={(e) => setCoffeeDate(e.target.value)}
                     />
                 </div>
@@ -85,7 +93,7 @@ export default function UpdateUser() {
                     variant="gradient"
                     type="submit"
                 >
-                    Add
+                    Update
                 </Button>
             </form>
         </Card>

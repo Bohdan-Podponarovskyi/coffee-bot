@@ -5,34 +5,6 @@ import axios from "axios";
 
 const TABLE_HEAD = ["Name", "Phone", "Date", "Actions"];
 
-const TABLE_ROWS = [
-    {
-        name: "John Michael",
-        job: "Manager",
-        date: "23/04/18",
-    },
-    {
-        name: "Alexa Liras",
-        job: "Developer",
-        date: "23/04/18",
-    },
-    {
-        name: "Laurent Perrier",
-        job: "Executive",
-        date: "19/09/17",
-    },
-    {
-        name: "Michael Levi",
-        job: "Developer",
-        date: "24/12/08",
-    },
-    {
-        name: "Richard Gran",
-        job: "Manager",
-        date: "04/10/21",
-    },
-];
-
 export default function Users() {
     const [users, setUsers] = useState([]);
 
@@ -42,7 +14,15 @@ export default function Users() {
             .catch(err => console.log(err));
     }, [])
 
-    console.log(users);
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:8080/deleteUser/${id}`)
+            .then(res => {
+                console.log(res)
+                window.location.reload();
+            })
+            .catch(err => console.log(err));
+
+    }
 
     return (
         <Card className="p-5 w-full items-start shadow-lg">
@@ -51,7 +31,7 @@ export default function Users() {
             </Link>
             <table className="w-full min-w-max table-auto text-center">
                 <thead>
-                <tr >
+                <tr>
                     {TABLE_HEAD.map((head) => (
                         <th
                             key={head}
@@ -117,7 +97,7 @@ export default function Users() {
                                     size="sm"
                                     variant="gradient"
                                     className="mx-1 normal-case"
-                                >
+                                    onClick={(e) => handleDelete(user._id)}>
                                     Delete
                                 </Button>
                             </td>
