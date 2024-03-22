@@ -2,8 +2,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Root from "./pages/Root";
 import Error from "./pages/Error";
 import Users from "./components/Users/Users";
-import CreateUser from "./components/Users/CreateUser";
-import UpdateUser from "./components/Users/UpdateUser";
+import CreateUser from "./pages/CreateUser.jsx";
+import UpdateUser from "./pages/UpdateUser.jsx";
 
 function App() {
     const router = createBrowserRouter([
@@ -21,7 +21,7 @@ function App() {
                     element: <CreateUser />
                 },
                 {
-                    path: '/update',
+                    path: '/update/:id',
                     element: <UpdateUser />
                 }
             ]

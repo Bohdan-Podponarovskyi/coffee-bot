@@ -102,7 +102,7 @@ export default function Users() {
                                 </Typography>
                             </td>
                             <td className={classes}>
-                                <Link to={"/update"}>
+                                <Link to={`/update/${user._id}`}>
                                     <Button
                                         color="teal"
                                         size="sm"

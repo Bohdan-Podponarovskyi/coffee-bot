@@ -22,6 +22,14 @@ app.get('/', (req, res) => {
         .catch(err => res.status(400).json({error: err.message}));
 })
 
+app.get('/getUser/:id', (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    UserModel.findById({_id: id})
+        .then(user => res.json(user))
+        .catch(err => res.status(400).json({error: err.message}));
+})
+
 app.post('/createUser', (req, res) => {
     UserModel.create(req.body)
         .then(user => res.json(user))
