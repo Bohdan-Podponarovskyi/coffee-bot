@@ -2,6 +2,7 @@ import {Card, Typography, Button} from "@material-tailwind/react";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {formatDate} from "../../utils.js";
 
 const TABLE_HEAD = ["Name", "Phone", "Date", "Actions"];
 
@@ -9,13 +10,13 @@ export default function Users() {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/")
+        axios.get(`${import.meta.env.VITE_SERVER_URL}`)
             .then(res => setUsers(res.data))
             .catch(err => console.log(err));
     }, [])
 
     const handleDelete = (id) => {
-        axios.delete(`http://localhost:8080/deleteUser/${id}`)
+        axios.delete(`${import.meta.env.VITE_SERVER_URL}/deleteUser/${id}`)
             .then(res => {
                 console.log(res)
                 window.location.reload();
@@ -51,6 +52,7 @@ export default function Users() {
                 <tbody>
                 {users.map((user) => {
                     const classes = "p-4 border-b border-blue-gray-50";
+                    const formattedDate = formatDate(user.coffeeDate);
 
                     return (
                         <tr key={user._id}>
@@ -78,7 +80,7 @@ export default function Users() {
                                     color="blue-gray"
                                     className="font-normal"
                                 >
-                                    {user.coffeeDate}
+                                    {formattedDate}
                                 </Typography>
                             </td>
                             <td className={classes}>

@@ -7,6 +7,7 @@ import {
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {formatDate} from "../utils.js";
 
 export default function CreateUser() {
     const [minDate, setMinDate] = useState(null);
@@ -17,17 +18,13 @@ export default function CreateUser() {
 
     useEffect(() => {
         const todaysDate = new Date();
-        const year = todaysDate.getFullYear();
-        const month = String(todaysDate.getMonth() + 1).padStart(2, "0");
-        const date = String(todaysDate.getDate()).padStart(2, "0");
-
-        setMinDate(`${year}-${month}-${date}`);
+        setMinDate(formatDate(todaysDate));
     }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
         let userId = Math.floor(Math.random() * 1000000) + 1;
-        axios.post("http://localhost:8080/createUser",  {userId, name, phone, coffeeDate})
+        axios.post(`${import.meta.env.VITE_SERVER_URL}/createUser`,  {userId, name, phone, coffeeDate})
             .then(result => {
                 console.log(result)
                 navigate("/")

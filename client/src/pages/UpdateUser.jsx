@@ -7,6 +7,8 @@ import {
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams, useNavigate} from "react-router-dom";
+import {formatDate} from "../utils.js";
+
 
 export default function UpdateUser() {
     const {id} = useParams();
@@ -19,15 +21,13 @@ export default function UpdateUser() {
 
     useEffect(() => {
         const todaysDate = new Date();
-        const year = todaysDate.getFullYear();
-        const month = String(todaysDate.getMonth() + 1).padStart(2, "0");
-        const date = String(todaysDate.getDate()).padStart(2, "0");
+        setMinDate(formatDate(todaysDate));
 
-        setMinDate(`${year}-${month}-${date}`);
+        console.log(import.meta.env.VITE_SERVER_URL);
     }, []);
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/getUser/${id}`)
+        axios.get(`${import.meta.env.VITE_SERVER_URL}/getUser/${id}`)
             .then(res => {
                 setName(res.data.name)
                 setPhone(res.data.phone)
@@ -42,7 +42,7 @@ export default function UpdateUser() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.put(`http://localhost:8080/updateUser/${id}`,  {id, name, phone, coffeeDate})
+        axios.put(`${import.meta.env.VITE_SERVER_URL}/updateUser/${id}`,  {id, name, phone, coffeeDate})
             .then(result => {
                 console.log(result)
                 navigate("/")
